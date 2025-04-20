@@ -1,0 +1,102 @@
+
+.landing-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Navigation */
+  .navbar {
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .brand-name {
+    font-weight: 700;
+    color: #4A89DC;
+    font-size: 1.5rem;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 72px);
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+  }
+  
+  .cta-button {
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+  }
+  
+  /* Features */
+  .features-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #495057;
+  }
+  
+  .features-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .features-list li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 2rem;
+  }
+  
+  .features-list li:before {
+    content: "✓";
+    color: #28a745;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+  
+  /* GIF Container */
+  .gif-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .app-gif {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+  /* LandingPage.css */
+.hero-section {
+    background: linear-gradient(-45deg, #f5f7fa, #e4f0ff, #d9eeff, #ebf5ff);
+    background-size: 400% 400%;
+    animation: gradient 12s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
