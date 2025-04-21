@@ -1,38 +1,17 @@
-
 import './LandingPage.css'; 
 import placeholderGif from '../assets/take-your-meds.gif';
+import { useNavigate } from 'react-router-dom'
+
+
 export default function LandingPage() {
+  const navigate = useNavigate(); 
+
+  const handleGetStarted = () => {
+    navigate('/add-medication'); 
+  }
   return (
     <div className="landing-page">
-      {/* Navigation Bar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container">
-          <a className="navbar-brand" href="#">
-            <span className="brand-name">MedTrack</span>
-          </a>
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <a className="nav-link" href="#features">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#how-it-works">Contact Us</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#get-started">About Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+     
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -44,7 +23,10 @@ export default function LandingPage() {
               <p className="hero-subtitle">
                 Get reminders and progress tracking all in one app.
               </p>
-              <button className="btn btn-primary btn-lg cta-button">
+              <button 
+                className="btn btn-primary btn-lg cta-button"
+                onClick={handleGetStarted} // Add onClick handler
+              >
                 Get Started
               </button>
 

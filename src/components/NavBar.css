@@ -1,0 +1,11 @@
+/* components/Navbar.css */
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020; /* Ensure navbar stays above other content */
+  }
+  
+  /* Add some padding to the body to prevent content from being hidden behind the navbar */
+  .content-container {
+    padding-top: 20px; /* Adjust this value based on your navbar height */
+  }
