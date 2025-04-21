@@ -1,8 +1,5 @@
-export default function MedCard() {
-    return (
-      <div>
-        <h1>My Medications</h1>
-        <p>Your medication list will appear here</p>
-      </div>
-    );
-  }
+export default function MedCard () {
+  return (
+    <p>Medication Cards will apppear here</p>
+  )
+}
