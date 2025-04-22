@@ -38,25 +38,25 @@ function MedicationForm({ onAdd }) {
       <h2>Add New Medication</h2>
       
       <div className="form-group">
-        <label>Drug Name</label>
+        <label>Drug Name and dosage</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="e.g. Ibuprofen"
+          placeholder="e.g. Ibuprofen 200mg"
           required
         />
       </div>
 
       <div className="form-group">
-        <label>Dosage</label>
+        <label>No. of pills per dose</label>
         <input
           type="text"
           name="dosage"
           value={formData.dosage}
           onChange={handleChange}
-          placeholder="e.g. 200mg"
+          placeholder="e.g. 3"
           required
         />
       </div>
