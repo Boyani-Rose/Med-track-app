@@ -1,79 +1,103 @@
-/* MedicationForm.css */
-.medication-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .medication-form h2 {
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    font-weight: 600;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #34495e;
-    font-weight: 500;
-    font-size: 1rem;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #dfe6e9;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background-color: #f8f9fa;
-  }
-  
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-    background-color: #ffffff;
-  }
-  
-  .form-group input::placeholder {
-    color: #b2bec3;
-  }
-  
-  .submit-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
-  }
-  
-  .submit-btn:hover {
-    background-color: #2980b9;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .medication-form {
-      margin: 1rem;
-      padding: 1.5rem;
-    }
-  }
+.med-card {
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.med-card.taken {
+  border-left: 5px solid #28a745;
+}
+
+.med-card.pending {
+  border-left: 5px solid #ffc107;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #343a40;
+}
+
+.card-header p {
+  margin: 5px 0 0;
+  color: #6c757d;
+}
+
+.card-schedule {
+  margin: 15px 0;
+}
+
+.time-slots {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.time-slots span {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.time-slots .taken {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.time-slots .pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.card-progress {
+  margin: 15px 0;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #17a2b8;
+  transition: width 0.3s ease;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.card-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #5a6268;
+}
+
+.complete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.complete-btn:hover {
+  background-color: #c82333;
+}

@@ -3,8 +3,11 @@ import './MedForm.css'
 
 
 
-function MedicationForm({ onAdd }) {
-  const [formData, setFormData] = useState({
+function MedicationForm({ onAdd, medicationToEdit, onUpdate }) {
+  const isEditing = !!medicationToEdit
+
+  const [formData, setFormData] = useState(
+    medicationToEdit || {
     name: '',
     dosage: '',
     frequency: 'Once a day',
@@ -36,6 +39,8 @@ function MedicationForm({ onAdd }) {
     
     <form onSubmit={handleSubmit} className="medication-form">
       <h2>Add New Medication</h2>
+
+      <h2>{isEditing ? 'Edit Medication' : 'Add New Medication'}</h2>
       
       <div className="form-group">
         <label>Drug Name and dosage</label>
@@ -88,7 +93,7 @@ function MedicationForm({ onAdd }) {
       </div>
 
       <button type="submit" className="submit-btn">
-        Add Medication
+      {isEditing ? 'Update Medication' : 'Add Medication'}
       </button>
     </form>
    
