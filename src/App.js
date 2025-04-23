@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/AboutPage";
-import MedCard from "./components/MedCard";
+import MyMedications from "./pages/MyMedications";
 import AddMedForm from "./components/AddMedForm";
-import NavBar from "./components/NavBar"; // We'll create this component next
+import NavBar from "./components/NavBar";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
   const [editingMed, setEditingMed] = useState(null);
   const [showCompletionMessage, setShowCompletionMessage] = useState(false);
 
-  // Fetch medications from API
+  
   useEffect(() => {
     const fetchMedications = async () => {
       try {
@@ -30,7 +30,7 @@ function App() {
     fetchMedications();
   }, []);
 
-  // Add new medication
+  
   const handleAddMedication = async (medication) => {
     try {
       const response = await fetch('http://localhost:3001/medications', {
@@ -40,7 +40,7 @@ function App() {
         },
         body: JSON.stringify({
           ...medication,
-          id: Date.now(), // Temporary ID until we get one from the server
+           
           startDate: new Date().toISOString()
         }),
       });
@@ -64,9 +64,9 @@ function App() {
         },
         body: JSON.stringify(updatedMed),
       });
-
+  
       if (response.ok) {
-        setMedications(medications.map(med => 
+        setMedications(medications.map(med =>
           med.id === updatedMed.id ? updatedMed : med
         ));
         setEditingMed(null);
@@ -75,6 +75,7 @@ function App() {
       console.error('Error updating medication:', error);
     }
   };
+  
 
   // Complete medication course
   const handleCompleteMedication = async (id) => {
@@ -93,71 +94,87 @@ function App() {
 
   // Set up reminders
   useEffect(() => {
-    if ('Notification' in window) {
-      Notification.requestPermission().then(permission => {
+    if (!medications.length) return;
+  
+    const timeouts = [];
+  
+    const requestNotificationPermission = async () => {
+      if ('Notification' in window) {
+        const permission = await Notification.requestPermission();
         if (permission === 'granted') {
           console.log('Notification permission granted');
+          scheduleReminders();
         }
-      });
-    }
-
+      }
+    };
+  
     const scheduleReminders = () => {
       medications.forEach(med => {
-        const times = calculateMedicationTimes(med.frequency);
-        
-        times.forEach(time => {
-          const [hours] = time.split(':');
-          const now = new Date();
-          const reminderTime = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            hours, 0, 0
-          );
-          
-          if (reminderTime > now) {
-            const timeout = reminderTime - now;
-            
-            setTimeout(() => {
-              if (Notification.permission === 'granted') {
-                new Notification(`Time to take ${med.name}`, {
-                  body: `Dosage: ${med.dosage} pill(s)`,
-                  icon: '/medicine-icon.png',
-                  vibrate: [200, 100, 200],
-                });
-                
-                // Play notification sound
-                const audio = new Audio('/notification.mp3');
-                audio.play();
-              }
-            }, timeout);
-          }
+        const timesPerDay = calculateMedicationTimes(med.frequency);
+        timesPerDay.forEach(time => {
+          const [hours, minutes] = time.split(':').map(Number);
+          const timeout = scheduleDailyNotification(med, hours, minutes);
+          timeouts.push(timeout);
         });
       });
     };
-
-    scheduleReminders();
+  
+    const scheduleDailyNotification = (medication, hour, minute) => {
+      const now = new Date();
+      const notificationTime = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        hour,
+        minute,
+        0
+      );
+  
+      if (notificationTime < now) {
+        notificationTime.setDate(notificationTime.getDate() + 1);
+      }
+  
+      const timeUntilNotification = notificationTime - now;
+  
+      const timeoutId = setTimeout(() => {
+        triggerNotification(medication);
+        scheduleDailyNotification(medication, hour, minute); 
+      }, timeUntilNotification);
+  
+      return timeoutId;
+    };
+  
+    const triggerNotification = (medication) => {
+      if (Notification.permission === 'granted') {
+        new Notification(`Time to take ${medication.name}`, {
+          body: `Dosage: ${medication.dosage} pill(s)`,
+          icon: '/medicine-icon.png',
+          vibrate: [200, 100, 200],
+        });
+      }
+    };
+  
+    requestNotificationPermission();
+  
+    // Clean up old timers
+    return () => {
+      timeouts.forEach(timeout => clearTimeout(timeout));
+    };
   }, [medications]);
+  
+  ;
 
   const calculateMedicationTimes = (frequency) => {
+    // Match these exactly with your MedCard times (but in 24-hour format)
     const frequencyMap = {
-      'Once a day': 1,
-      'Twice a day': 2,
-      'Thrice a day': 3,
-      '4 times a day': 4
+      'Once a day': ['08:00'],        // 8:00 AM
+      'Twice a day': ['08:00', '20:00'], // 8:00 AM, 8:00 PM
+      'Thrice a day': ['08:00', '14:00', '20:00'], // 8:00 AM, 2:00 PM, 8:00 PM
+      '4 times a day': ['06:00', '12:00', '18:00', '22:00'] // 6:00 AM, 12:00 PM, 6:00 PM, 10:00 PM
     };
-    
-    const totalDoses = frequencyMap[frequency] || 1;
-    const interval = 24 / totalDoses;
-    const times = [];
-    
-    for (let i = 0; i < totalDoses; i++) {
-      const hour = Math.floor(i * interval);
-      times.push(`${hour}:00`);
-    }
-    
-    return times;
+    return frequencyMap[frequency] || ['08:00'];
   }
+  
 
   return (
     <Router>
