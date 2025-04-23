@@ -62,9 +62,27 @@ useEffect(() => {
     }
   };
   
-  const handleComplete = () => {
-    onComplete(medication.id);
+  const handleComplete = async () => {
+    if (courseProgress < 100) {
+      const proceed = window.confirm("You have not finished all doses. Are you sure you want to complete this course?");
+      if (!proceed) return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:3001/medications/${medication.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Delete failed! Status: ${response.status}`);
+      }
+  
+      onComplete(medication.id);
+    } catch (err) {
+      console.error("Failed to complete medication:", err);
+    }
   };
+  
 
   // Reset taken doses at midnight
   useEffect(() => {
@@ -104,10 +122,32 @@ localStorage.setItem(`takenToday-${medication.id}-${today}`, '0');
   };
   const medicationTimes = getMedicationTimes();
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Are you sure you want to remove this medication?");
+    if (!confirmed) return;
+  
+    try {
+      const response = await fetch(`http://localhost:3001/medications/${medication.id}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Delete failed! Status: ${response.status}`);
+      }
+  
+      onComplete(medication.id); // same as your complete button
+    } catch (err) {
+      console.error("Failed to delete medication:", err);
+    }
+  };
+  
+
   return (
     <div className={`med-card ${status}`}>
       <div className="card-header">
         <h3>{medication.name}</h3>
+        <button className="delete-btn" onClick={handleDelete} title="Remove medication">x</button>
+
         <p>Dosage: {medication.dosage} pill(s) per dose</p>
       </div>
       
