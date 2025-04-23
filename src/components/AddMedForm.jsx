@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import './MedForm.css'
+import { useNavigate } from 'react-router-dom';
+import './MedForm.css';
 
+function MedicationForm({ onAdd }) {
+  const navigate = useNavigate();
 
-
-function MedicationForm({ onAdd, medicationToEdit, onUpdate }) {
-  const isEditing = !!medicationToEdit
-
-  const [formData, setFormData] = useState(
-    medicationToEdit || {
+  const [formData, setFormData] = useState({
     name: '',
     dosage: '',
     frequency: 'Once a day',
@@ -25,23 +23,21 @@ function MedicationForm({ onAdd, medicationToEdit, onUpdate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.name.trim()) return;
-    onAdd(formData);
-    setFormData({
-      name: '',
-      dosage: '',
-      frequency: 'Once a day',
-      total: 1
-    });
+
+    const medicationData = {
+      ...formData,
+      totalTaken: 0, // Starts at 0 taken
+      startDate: new Date().toISOString() // Records when added
+    };
+
+    onAdd(medicationData);
+    navigate('/my-medications');
   };
 
   return (
-    <>
-    
     <form onSubmit={handleSubmit} className="medication-form">
       <h2>Add New Medication</h2>
 
-      <h2>{isEditing ? 'Edit Medication' : 'Add New Medication'}</h2>
-      
       <div className="form-group">
         <label>Drug Name and dosage</label>
         <input
@@ -93,12 +89,9 @@ function MedicationForm({ onAdd, medicationToEdit, onUpdate }) {
       </div>
 
       <button type="submit" className="submit-btn">
-      {isEditing ? 'Update Medication' : 'Add Medication'}
+        Add Medication
       </button>
     </form>
-   
-
-    </>
   );
 }
 
