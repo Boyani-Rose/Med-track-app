@@ -26,8 +26,7 @@ function MedicationForm({ onAdd }) {
 
     const medicationData = {
       ...formData,
-      totalTaken: 0, // Starts at 0 taken
-      startDate: new Date().toISOString() // Records when added
+      totalTaken: 0, 
     };
 
     onAdd(medicationData);
