@@ -101,3 +101,40 @@
   .complete-btn:hover {
     background-color: #5ae035;
   }
+
+  .delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #d9534f;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    color: #c9302c;
+  }
+
+  .card-header {
+    position: relative; /* <-- makes absolute children position relative to this */
+    padding-right: 30px; /* space so text doesn't clash with the X */
+  }
+  
+  .delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #d9534f;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    color: #c9302c;
+  }
+  
