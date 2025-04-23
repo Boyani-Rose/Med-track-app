@@ -12,6 +12,10 @@ function App() {
   const [medications, setMedications] = useState([]);
   const [editingMed, setEditingMed] = useState(null);
   const [showCompletionMessage, setShowCompletionMessage] = useState(false);
+  // const [midnightTrigger, setMidnightTrigger] = useState(0);
+
+  
+
 
   
   useEffect(() => {
@@ -148,7 +152,7 @@ function App() {
       if (Notification.permission === 'granted') {
         new Notification(`Time to take ${medication.name}`, {
           body: `Dosage: ${medication.dosage} pill(s)`,
-          icon: '/medicine-icon.png',
+          // icon: '/medicine-icon.png',
           vibrate: [200, 100, 200],
         });
       }
@@ -174,6 +178,27 @@ function App() {
     };
     return frequencyMap[frequency] || ['08:00'];
   }
+
+  // useEffect(() => {
+  //   const now = new Date();
+  //   const nextMidnight = new Date(
+  //     now.getFullYear(),
+  //     now.getMonth(),
+  //     now.getDate() + 1,
+  //     0, 0, 0
+  //   );
+  
+  //   const msUntilMidnight = nextMidnight - now;
+  
+  //   const timeoutId = setTimeout(() => {
+  //     setMidnightTrigger(prev => prev + 1); // Force re-render
+  //   }, msUntilMidnight);
+  
+  //   return () => clearTimeout(timeoutId);
+  // }, [midnightTrigger]);
+  
+  
+  
   
 
   return (
