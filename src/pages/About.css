@@ -1,0 +1,30 @@
+.about-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-page section {
+    margin-bottom: 30px;
+  }
+  
+  .about-page h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #2a7da2;
+    border-bottom: 2px solid #2a7da2;
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+  
+  .about-page p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 0;
+  }
+  
