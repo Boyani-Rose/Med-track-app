@@ -118,8 +118,8 @@
   }
 
   .card-header {
-    position: relative; /* <-- makes absolute children position relative to this */
-    padding-right: 30px; /* space so text doesn't clash with the X */
+    position: relative; 
+    padding-right: 30px; 
   }
   
   .delete-btn {

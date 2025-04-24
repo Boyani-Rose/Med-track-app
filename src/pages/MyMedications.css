@@ -1,41 +1,52 @@
 .my-medications {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .add-med-btn {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-bottom: 20px;
-    transition: background-color 0.3s;
-  }
-  
-  .add-med-btn:hover {
-    background-color: #0069d9;
-  }
-  
-  .medications-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .empty-state {
-    text-align: center;
-    padding: 40px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    grid-column: 1 / -1;
-  }
-  
-  .empty-state p {
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    color: #6c757d;
-  }
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.add-med-btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.add-med-btn:hover {
+  background-color: #0069d9;
+}
+
+.medications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  grid-column: 1 / -1;
+}
+
+.empty-state p {
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  margin: 20px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: block;
+}

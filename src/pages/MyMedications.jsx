@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import MedCard from '../components/MedCard';
-import { Link } from 'react-router-dom';
-import './MyMedications.css';
+import React, { useState } from "react";
+import MedCard from "../components/MedCard";
+import { Link } from "react-router-dom";
+import "./MyMedications.css";
 
 function MyMedications({ medications, onUpdate, onComplete }) {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredMedications = medications.filter(med =>
+  const filteredMedications = medications.filter((med) =>
     med.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -32,7 +32,7 @@ function MyMedications({ medications, onUpdate, onComplete }) {
             <p>No medications match your search.</p>
           </div>
         ) : (
-          filteredMedications.map(med => (
+          filteredMedications.map((med) => (
             <MedCard
               key={med.id}
               medication={med}

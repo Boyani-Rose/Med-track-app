@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './MedForm.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./MedForm.css";
 
 function MedicationForm({ onAdd }) {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '',
-    dosage: '',
-    frequency: 'Once a day',
-    total: 1
+    name: "",
+    dosage: "",
+    frequency: "Once a day",
+    total: 1,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'total' ? parseInt(value) || 0 : value
+      [name]: name === "total" ? parseInt(value) || 0 : value,
     }));
   };
 
@@ -26,11 +26,11 @@ function MedicationForm({ onAdd }) {
 
     const medicationData = {
       ...formData,
-      totalTaken: 0, 
+      totalTaken: 0,
     };
 
     onAdd(medicationData);
-    navigate('/my-medications');
+    navigate("/my-medications");
   };
 
   return (

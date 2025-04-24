@@ -1,6 +1,5 @@
-// components/Navbar.jsx
-import { NavLink } from 'react-router-dom';
-import '../components/NavBar.css'; // We'll create this CSS file next
+import { NavLink } from "react-router-dom";
+import "../components/NavBar.css";
 
 export default function Navbar() {
   return (
@@ -9,10 +8,10 @@ export default function Navbar() {
         <NavLink className="navbar-brand" to="/">
           <span className="brand-name">MedTrack</span>
         </NavLink>
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
         >
           <span className="navbar-toggler-icon"></span>
@@ -20,13 +19,19 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/add-medication">Home</NavLink>
+              <NavLink className="nav-link" to="/add-medication">
+                Home
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/my-medications">My Medications</NavLink>
+              <NavLink className="nav-link" to="/my-medications">
+                My Medications
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/about">About Us</NavLink>
+              <NavLink className="nav-link" to="/about">
+                About Us
+              </NavLink>
             </li>
           </ul>
         </div>

@@ -1,18 +1,15 @@
-import './LandingPage.css'; 
-import placeholderGif from '../assets/take-your-meds.gif';
-import { useNavigate } from 'react-router-dom'
-
+import "./LandingPage.css";
+import placeholderGif from "../assets/take-your-meds.gif";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/add-medication'); 
-  }
+    navigate("/add-medication");
+  };
   return (
     <div className="landing-page">
-     
-
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container">
@@ -23,7 +20,7 @@ export default function LandingPage() {
               <p className="hero-subtitle">
                 Get reminders and progress tracking all in one app.
               </p>
-              <button 
+              <button
                 className="btn btn-primary btn-lg cta-button"
                 onClick={handleGetStarted} // Add onClick handler
               >
@@ -37,17 +34,15 @@ export default function LandingPage() {
                   <li>Smart medication reminders</li>
                   <li>Dose tracking (✅/⏰)</li>
                   <li>Weekly progress charts</li>
-                  
                 </ul>
               </div>
             </div>
 
-            
             <div className="col-lg-6 d-none d-lg-block">
               <div className="gif-container">
-                <img 
-                  src={placeholderGif} 
-                  alt="App demonstration" 
+                <img
+                  src={placeholderGif}
+                  alt="App demonstration"
                   className="app-gif"
                 />
               </div>
