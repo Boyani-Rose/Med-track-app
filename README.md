@@ -15,13 +15,12 @@ A React-based web application to help users track their medication schedules and
 
 - **React**: Frontend framework for building the UI.
 - **JSON Server**: Simulated backend using `db.json`.
-- **Browser Notifications API**: Sends reminder alerts.
 - **Local Storage & API Fetch**: For syncing medication status.
 
 ## How It Works
 
 1. Add medication details via the form.
-2. The app tracks each medication’s schedule and sends reminders.
+2. The app tracks each medication's schedule and sends reminders.
 3. Users can check off medications as taken, and the data is saved automatically.
 
 ## Getting Started
