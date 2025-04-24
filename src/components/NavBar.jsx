@@ -4,10 +4,12 @@ import "../components/NavBar.css";
 export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      
       <div className="container">
         <NavLink className="navbar-brand" to="/">
           <span className="brand-name">MedTrack</span>
         </NavLink>
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -33,6 +35,8 @@ export default function Navbar() {
                 About Us
               </NavLink>
             </li>
+            
+
           </ul>
         </div>
       </div>

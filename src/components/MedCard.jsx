@@ -32,6 +32,11 @@ function MedCard({ medication, onUpdate, onComplete }) {
   const handleTakeDose = async () => {
     if (takenToday >= totalDosesPerDay) return;
 
+    if (!isWithinAllowedTime()) {
+      alert("⏰ You can only mark this dose within 30 minutes of the scheduled time.");
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://localhost:3001/medications/${medication.id}`,
@@ -42,6 +47,7 @@ function MedCard({ medication, onUpdate, onComplete }) {
           },
           body: JSON.stringify({
             totalTaken: (medication.totalTaken || 0) + medication.dosage,
+            
           }),
         }
       );
@@ -65,6 +71,17 @@ function MedCard({ medication, onUpdate, onComplete }) {
       console.error("Update failed:", err);
     }
   };
+
+  const isWithinAllowedTime = () => {
+    const now = new Date();
+    return medicationTimes.some((scheduledTime, index) => {
+      if (index < takenToday) return false; // already taken this slot
+  
+      const diffInMinutes = Math.abs((now - scheduledTime) / (1000 * 60));
+      return diffInMinutes <= 30; // allow marking if within 30 mins
+    });
+  };
+  
 
   const handleComplete = async () => {
     if (courseProgress < 100) {
@@ -116,16 +133,34 @@ function MedCard({ medication, onUpdate, onComplete }) {
     return () => clearTimeout(resetTimer);
   }, [medication.id]);
 
+  // const getMedicationTimes = () => {
+  //   const timeMap = {
+  //     "Once a day": ["8:00 AM"],
+  //     "Twice a day": ["8:00 AM", "8:00 PM"],
+  //     "Thrice a day": ["8:00 AM", "2:00 PM", "8:00 PM"],
+  //     "4 times a day": ["6:00 AM", "12:00 PM", "6:00 PM", "10:00 PM"],
+  //   };
+
+  //   return timeMap[medication.frequency] || ["8:00 AM"];
+  // };
   const getMedicationTimes = () => {
     const timeMap = {
-      "Once a day": ["8:00 AM"],
-      "Twice a day": ["8:00 AM", "8:00 PM"],
-      "Thrice a day": ["8:00 AM", "2:00 PM", "8:00 PM"],
-      "4 times a day": ["6:00 AM", "12:00 PM", "6:00 PM", "10:00 PM"],
+      "Once a day": ["08:00"],
+      "Twice a day": ["08:00", "20:00"],
+      "Thrice a day": ["08:00", "14:00", "20:00"],
+      "4 times a day": ["06:00", "12:00", "18:00", "22:00"],
     };
-
-    return timeMap[medication.frequency] || ["8:00 AM"];
+  
+    const times = timeMap[medication.frequency] || ["08:00"];
+  
+    return times.map((timeStr) => {
+      const [hour, minute] = timeStr.split(":").map(Number);
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute);
+    });
   };
+  
+
   const medicationTimes = getMedicationTimes();
 
   const handleDelete = async () => {
@@ -175,7 +210,7 @@ function MedCard({ medication, onUpdate, onComplete }) {
               key={index}
               className={index < takenToday ? "taken" : "pending"}
             >
-              {time}
+              {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             </span>
           ))}
         </div>

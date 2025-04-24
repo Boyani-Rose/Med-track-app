@@ -8,6 +8,8 @@ import NavBar from "./components/NavBar";
 
 function App() {
   const [medications, setMedications] = useState([]);
+ 
+
 
   useEffect(() => {
     const fetchMedications = async () => {
@@ -67,6 +69,7 @@ function App() {
     if (!medications.length) return;
 
     const timeouts = [];
+    let missedDoseInterval;
 
     const requestNotificationPermission = async () => {
       if ("Notification" in window) {
@@ -74,6 +77,7 @@ function App() {
         if (permission === "granted") {
           console.log("Notification permission granted");
           scheduleReminders();
+          startMissedDoseCheck();
         }
       }
     };
@@ -89,7 +93,7 @@ function App() {
       });
     };
 
-    const scheduleDailyNotification = (medication, hour, minute) => {
+    const scheduleDailyNotification = (medication, hour, minute, slotIndex) => {
       const now = new Date();
       const notificationTime = new Date(
         now.getFullYear(),
@@ -107,8 +111,15 @@ function App() {
       const timeUntilNotification = notificationTime - now;
 
       const timeoutId = setTimeout(() => {
+        // triggerNotification(medication);
+        const today = new Date().toISOString().split("T")[0];
+      const takenKey = `taken-${medication.id}-${today}-${slotIndex}`;
+
+      if (!localStorage.getItem(takenKey)) {
         triggerNotification(medication);
-        scheduleDailyNotification(medication, hour, minute);
+      }
+        
+        scheduleDailyNotification(medication, hour, minute, slotIndex);
       }, timeUntilNotification);
 
       return timeoutId;
@@ -122,13 +133,51 @@ function App() {
       }
     };
 
+    const startMissedDoseCheck = () => {
+      missedDoseInterval = setInterval(() => {
+        const now = new Date();
+  
+        medications.forEach((med) => {
+          const times = calculateMedicationTimes(med.frequency);
+          times.forEach((time, index) => {
+            const [hour, minute] = time.split(":").map(Number);
+            const scheduledTime = new Date(
+              now.getFullYear(),
+              now.getMonth(),
+              now.getDate(),
+              hour,
+              minute
+            );
+  
+            const diffInMinutes = (now - scheduledTime) / (1000 * 60);
+            const today = now.toISOString().split("T")[0];
+            const takenKey = `taken-${med.id}-${today}-${index}`;
+  
+            if (diffInMinutes > 30 && !localStorage.getItem(takenKey)) {
+              // Missed dose
+              if (Notification.permission === "granted") {
+                new Notification(`⏰ Missed dose for ${med.name}`, {
+                  body: `You missed the dose scheduled at ${time}`,
+                });
+              }
+              localStorage.setItem(takenKey, "missed");
+            }
+          });
+        });
+      }, 10 * 60 * 1000); // every 10 minutes
+    };
+  
+
     requestNotificationPermission();
 
-    // Clean up old timers
+   
     return () => {
       timeouts.forEach((timeout) => clearTimeout(timeout));
+      clearInterval(missedDoseInterval)
     };
   }, [medications]);
+
+ 
 
   const calculateMedicationTimes = (frequency) => {
     const frequencyMap = {
@@ -139,6 +188,15 @@ function App() {
     };
     return frequencyMap[frequency] || ["08:00"];
   };
+
+  const handleUpdateMedication = (updatedMed) => {
+    setMedications((prevMeds) =>
+      prevMeds.map((med) =>
+        med.id === updatedMed.id ? updatedMed : med
+      )
+    );
+  };
+  
 
   return (
     <Router>
@@ -156,6 +214,7 @@ function App() {
               <MyMedications
                 medications={medications}
                 onComplete={handleCompleteMedication}
+                onUpdate={handleUpdateMedication}
               />
             }
           />

@@ -1,3 +1,22 @@
 {
-  "medications": []
+  "medications": [
+    {
+      "id": "72ec",
+      "name": "Secnidazole 500mg",
+      "dosage": "2",
+      "frequency": "Thrice a day",
+      "total": 19,
+      "totalTaken": "022",
+      "startDate": "2025-04-24T16:57:10.226Z"
+    },
+    {
+      "id": "d8a8",
+      "name": "Paracetamol",
+      "dosage": "2",
+      "frequency": "Once a day",
+      "total": 10,
+      "totalTaken": 0,
+      "startDate": "2025-04-24T16:59:52.121Z"
+    }
+  ]
 }
